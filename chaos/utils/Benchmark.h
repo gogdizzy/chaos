@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cstdio>
+#include <chrono>
 #include <functional>
 
 class Benchmark {
@@ -15,23 +16,31 @@ public:
     }
 
     void head( const char *catalog, std::initializer_list< const char * > heads ) {
-        printf( "%*s", catalog_width, catalog );
+        printf( "%*s", catalog_width_, catalog );
         for( auto h : heads ) {
-            printf( "%*s", item_width, h );
+            printf( "%*s", item_width_, h );
         }
         printf( "\n" );
     }
 
     template< typename Func >
     void content( const char *catalog, std::initializer_list< const Func > funcs ) {
-        printf( "%*s", catalog_width, catalog );
+        printf( "%*s", catalog_width_, catalog );
         for( auto &f : funcs ) {
             auto beg = std::chrono::high_resolution_clock::now();
             f();
             auto end = std::chrono::high_resolution_clock::now();
-            printf( "%*lld", item_width, std::chrono::duration_cast< std::chrono::microseconds >(end - beg).count() );
+            printf( "%*lld", item_width_, std::chrono::duration_cast< std::chrono::microseconds >(end - beg).count() );
         }
         printf( "\n" );
+    }
+
+    template< typename Func >
+    int64_t run_once( Func &&func ) {
+        auto beg = std::chrono::high_resolution_clock::now();
+        func();
+        auto end = std::chrono::high_resolution_clock::now();
+        return std::chrono::duration_cast< std::chrono::microseconds >(end - beg).count();
     }
 
 private:
