@@ -11,5 +11,6 @@ for i = 1 : 5000
 end
 
 plot(x, y, 'ro', 'MarkerSize',2, 'MarkerFaceColor','r');
+axis equal;
 
 toc;

@@ -33,6 +33,7 @@ for i = 1 : count
 end
 
 plot(x, y, 'r.', 'MarkerSize', 5);
+axis equal;
 
 toc;
 

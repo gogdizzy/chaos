@@ -15,6 +15,7 @@ for i = 1 : count
 end
 
 plot3(x, y, z, 'ro', 'MarkerSize',2, 'MarkerFaceColor','r');
+axis equal;
 
 toc;
 
