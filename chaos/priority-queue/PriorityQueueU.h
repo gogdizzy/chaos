@@ -255,6 +255,7 @@ void
 PriorityQueueU< _Tp, _Container, _Compare >::update( value_type &__v ) {
     __v.setLocator( locator );
     int pos = __v.getLoc();
+    if( pos < 0 || pos >= c.size() ) return;
     c[pos] = std::move( __v );
     sift_up( c.begin(), c.begin() + pos + 1, comp, pos + 1 );
     sift_down( c.begin(), c.end(), comp, c.end() - c.begin(), c.begin() + pos );
@@ -266,6 +267,7 @@ void
 PriorityQueueU< _Tp, _Container, _Compare >::update( value_type &&__v ) {
     __v.setLocator( locator );
     int pos = __v.getLoc();
+    if( pos < 0 || pos >= c.size() ) return;
     c[pos] = std::move( __v );
     sift_up( c.begin(), c.begin() + pos + 1, comp, pos + 1 );
     sift_down( c.begin(), c.end(), comp, c.end() - c.begin(), c.begin() + pos );
